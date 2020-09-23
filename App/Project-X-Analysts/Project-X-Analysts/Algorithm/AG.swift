@@ -12,14 +12,15 @@ public class AG {
     
     public func run() {
         createInitialPopulation()
+        repeat {
+            evaluatePopulation()
+            reproducePopulation()
+        } while shouldContinueRunning()
     }
     
     private func createInitialPopulation() {
         for _ in 0..<populationDescriptor.size {
             population.append(createChromosome())
-        }
-        population.forEach { chromosome in
-            print(chromosome)
         }
     }
     
@@ -32,5 +33,28 @@ public class AG {
             seed.removeAll(where: { $0.identifier == analyst.identifier })
         }
         return Chromosome(analysts: identifiers)
+    }
+    
+    private func evaluatePopulation() {
+        let scores = population.map(evaluate(chromosome:))
+    }
+    
+    private func evaluate(chromosome: Chromosome) -> Int {
+        var score = 0
+        score += 10
+        return score
+    }
+    
+    private func reproducePopulation() {
+    }
+    
+    private func shouldContinueRunning() -> Bool {
+        false
+    }
+    
+    private func showPopulation() {
+        population.forEach { chromosome in
+            print(chromosome)
+        }
     }
 }
