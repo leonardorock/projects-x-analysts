@@ -29,11 +29,9 @@ problem.varmax = 15
 params = structure()
 params.maxit = 100
 params.npop = 20
-params.beta = 1
 params.pc = 1
 params.gamma = 5
 params.mu = 0.01
-params.sigma = 0.1
 
 # Run GA
 out = ga.run(problem, params)
