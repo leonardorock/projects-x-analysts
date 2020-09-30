@@ -42,12 +42,6 @@ def run(problem, params):
     # Main Loop
     for it in range(maxit):
 
-        # costs = np.array([x.cost for x in pop])
-        # avg_cost = np.mean(costs)
-        # if avg_cost != 0:
-        #     costs = costs/avg_cost
-        # probs = np.exp(-beta*costs)
-
         popc = []
         for _ in range(nc//2):
 
@@ -55,10 +49,6 @@ def run(problem, params):
             q = np.random.permutation(npop)
             p1 = pop[q[0]]
             p2 = pop[q[1]]
-
-            # Perform Roulette Wheel Selection
-            # p1 = pop[roulette_wheel_selection(probs)]
-            # p2 = pop[roulette_wheel_selection(probs)]
             
             # Perform Crossover
             c1, c2 = crossover(p1, p2, gamma)
@@ -66,10 +56,6 @@ def run(problem, params):
             # Perform Mutation
             c1 = mutate(c1, mu, varmin, varmax)
             c2 = mutate(c2, mu, varmin, varmax)
-
-            # Apply Bounds
-            apply_bound(c1, varmin, varmax)
-            apply_bound(c2, varmin, varmax)
 
             # Evaluate First Offspring
             c1.cost = costfunc(c1.analysts)
@@ -115,15 +101,5 @@ def mutate(x, mu, varmin, varmax):
     y = x.deepcopy()
     flag = np.random.rand(*x.analysts.shape) <= mu
     ind = np.argwhere(flag)
-    y.analysts[ind] = random.randint(varmin, varmax + 1)
+    y.analysts[ind] = random.randint(varmin, varmax)
     return y
-
-def apply_bound(x, varmin, varmax):
-    x.analysts = np.maximum(x.analysts, varmin)
-    x.analysts = np.minimum(x.analysts, varmax)
-
-def roulette_wheel_selection(p):
-    c = np.cumsum(p)
-    r = sum(p)*np.random.rand()
-    ind = np.argwhere(r <= c)
-    return ind[0][0]
