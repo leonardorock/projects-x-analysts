@@ -79,7 +79,7 @@ def run(problem, params):
         bestsol = pop[0]
         bestcost[it] = bestsol.cost
         meancost[it] = pop[nc//2].cost
-        worstcost[it] = pop[nc-1].cost
+        worstcost[it] = pop[npop-1].cost
 
         # Show Iteration Information
         print("Iteration {}: Best Cost = {}".format(it, bestcost[it]))
