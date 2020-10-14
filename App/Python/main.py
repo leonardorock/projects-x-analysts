@@ -40,6 +40,8 @@ print(out.bestsol)
 
 # Results
 plt.plot(out.bestcost)
+plt.plot(out.meancost)
+plt.plot(out.worstcost)
 plt.xlim(0, params.maxit)
 plt.xlabel('Iterations')
 plt.ylabel('Best Cost')

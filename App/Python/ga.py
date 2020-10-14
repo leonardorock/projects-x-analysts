@@ -38,6 +38,8 @@ def run(problem, params):
 
     # Best Cost of Iterations
     bestcost = np.empty(maxit)
+    meancost = np.empty(maxit)
+    worstcost = np.empty(maxit)
     
     # Main Loop
     for it in range(maxit):
@@ -59,13 +61,9 @@ def run(problem, params):
 
             # Evaluate First Offspring
             c1.cost = costfunc(c1.analysts)
-            if c1.cost < bestsol.cost:
-                bestsol = c1.deepcopy()
 
             # Evaluate Second Offspring
             c2.cost = costfunc(c2.analysts)
-            if c2.cost < bestsol.cost:
-                bestsol = c2.deepcopy()
 
             # Add Offsprings to popc
             popc.append(c1)
@@ -78,7 +76,10 @@ def run(problem, params):
         pop = pop[0:npop]
 
         # Store Best Cost
+        bestsol = pop[0]
         bestcost[it] = bestsol.cost
+        meancost[it] = pop[nc//2].cost
+        worstcost[it] = pop[nc-1].cost
 
         # Show Iteration Information
         print("Iteration {}: Best Cost = {}".format(it, bestcost[it]))
@@ -88,6 +89,8 @@ def run(problem, params):
     out.pop = pop
     out.bestsol = bestsol
     out.bestcost = bestcost
+    out.meancost = meancost
+    out.worstcost = worstcost
     return out
 
 def crossover(p1, p2, gamma=5):
